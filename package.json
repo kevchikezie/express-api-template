@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node src/index.js",
+		"db-migrate": "sequelize db:migrate",
 		"dev": "nodemon src/index.js"
 	},
 	"author": "FarmersCreed",
