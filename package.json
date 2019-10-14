@@ -1,0 +1,31 @@
+{
+	"name": "farmerscreed-invest",
+	"version": "1.0.0",
+	"description": "FarmersCreed Invest API",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js"
+	},
+	"author": "FarmersCreed",
+	"license": "ISC",
+	"dependencies": {
+		"@hapi/joi": "^16.1.7",
+		"bcrypt": "^3.0.2",
+		"body-parser": "^1.18.3",
+		"cors": "^2.8.4",
+		"dotenv": "^6.2.0",
+		"express": "^4.17.1",
+		"jsonwebtoken": "^8.4.0",
+		"moment": "^2.24.0",
+		"morgan": "^1.9.1",
+		"mysql": "^2.17.1",
+		"mysql2": "^1.7.0",
+		"sequelize": "^5.19.6",
+		"sequelize-cli": "^5.5.1",
+		"validator": "^11.1.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.19.3"
+	}
+}
