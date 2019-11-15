@@ -3,6 +3,7 @@ const apiAuth = require("../../middlewares/apiAuth");
 const LoginController = require("../../controllers/auth/loginController");
 const RegisterController = require("../../controllers/auth/registerController");
 const VerifyEmailController = require("../../controllers/auth/verifyEmailController");
+const ForgotPasswordController = require("../../controllers/auth/forgotPasswordController");
 
 const router = new express.Router();
 
@@ -11,8 +12,9 @@ router.post("/login", LoginController.login);
 router.post("/register", RegisterController.register);
 
 router.post("/email/resend", apiAuth, VerifyEmailController.resend);
-
 router.post("/email/status", apiAuth, VerifyEmailController.status);
+
+router.post("/password/email", ForgotPasswordController.sendResetLink);
 
 router.post("/logout", apiAuth, LoginController.logout);
 

@@ -2,36 +2,43 @@ const Mail = require("../../utils/mail");
 const models = require("../../database/models");
 const Token = require("../../utils/tokenManager");
 
-class VerifyEmailService {
+class ForgotPasswordService {
 	/**
-	 * Handles the sending of email verification mails to users after registration.
+	 * Handles the sending of password reset link to user's email
 	 * @param {string} email the registered user's email
 	 * @returns {void}
 	 */
-	async sendEmailVerification(email) {
-		const verificationUrl = await this.verificationUrl(email);
+	async sendResetLinkEmail(email) {
+		const user = await models.User.findOne({ where: { email: email } });
 
-		const subject = "Email Verification";
+		if (user) {
+			const resetPasswordUrl = await this.resetPasswordUrl(user.email);
 
-		const body = `<p><strong>Hello, </strong></p>
-			<p>Please click the link below to verify your email address.</p>
-			<p> <a href=${verificationUrl}>${verificationUrl}</a> </p>
-			<p>This verification link will expire in 60 minutes</p>
-			<p>If you did not create an account, no further action is required.</p> <br><br>
+			const subject = "Reset Password Notification";
+
+			const body = `<p><strong>Hello ${user.name}, </strong></p>
+			<p>You are receiving this email because we received a password reset request for your account.</p>
+			<p>This password reset link will expire in 60 minutes</p>
+			<p> <a href=${resetPasswordUrl}>${resetPasswordUrl}</a> </p>
+			<p>If you did not request a password reset, no further action is required.</p> <br><br>
 			<p>Regards, <br> ${process.env.APP_NAME}</p>`;
 
-		Mail.send(email, subject, body);
+			Mail.send(email, subject, body);
+			// console.log(resetPasswordUrl);
+		} else {
+			return false;
+		}
 	}
 
 	/**
-	 * Creates the verification url
+	 * Creates the password reset url
 	 * @param {string} email the registered user's email
 	 * @returns {string}
 	 */
-	async verificationUrl(email) {
+	async resetPasswordUrl(email) {
 		const token = await Token.generate({ email }, "60 minutes");
 
-		return `${process.env.APP_URL}/oauth/email/verify?token=${token}`;
+		return `${process.env.APP_URL}/oauth/password/reset?token=${token}`;
 	}
 
 	/**
@@ -65,4 +72,4 @@ class VerifyEmailService {
 	}
 }
 
-module.exports = new VerifyEmailService();
+module.exports = new ForgotPasswordService();
