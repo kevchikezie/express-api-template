@@ -45,6 +45,40 @@ class VerifyEmailController {
 			res.status(500).send();
 		}
 	}
+
+	/**
+	 * Confirm user's email status to know if it has been verified or not
+	 * @param {Object} req
+	 * @param {Object} res
+	 * @returns {void}
+	 */
+	status(req, res) {
+		try {
+			if (req.user.verifiedAt) {
+				res.send({
+					status: "success",
+					code: 200,
+					title: "OK",
+					message: "Email is verified.",
+					data: {
+						verifiedAt: req.user.verifiedAt
+					}
+				});
+			} else {
+				res.send({
+					status: "success",
+					code: 200,
+					title: "OK",
+					message: "Email has not been verified.",
+					data: {
+						verifiedAt: req.user.verifiedAt
+					}
+				});
+			}
+		} catch (error) {
+			res.status(500).send();
+		}
+	}
 }
 
 module.exports = new VerifyEmailController();
