@@ -1,9 +1,15 @@
-const AuthService = require("../services/authService");
+const LoginService = require("../../services/auth/loginService");
 
-class AuthController {
+class LoginController {
+	/**
+	 * Log a user in to the application
+	 * @param {Object} req
+	 * @param {Object} res
+	 * @returns {void}
+	 */
 	async login(req, res) {
 		try {
-			const user = await AuthService.attemptLogin(
+			const user = await LoginService.attemptLogin(
 				req.body.email,
 				req.body.password
 			);
@@ -14,16 +20,12 @@ class AuthController {
 		}
 	}
 
-	async register(req, res) {
-		try {
-			const user = await AuthService.registerUser(req.body);
-
-			res.status(201).send(user);
-		} catch (error) {
-			res.status(400).send(error);
-		}
-	}
-
+	/**
+	 * Log out a user from the application
+	 * @param {Object} req
+	 * @param {Object} res
+	 * @returns {void}
+	 */
 	async logout(req, res) {
 		try {
 			if (req.user.userTokens[0].token !== req.token) {
@@ -39,4 +41,4 @@ class AuthController {
 	}
 }
 
-module.exports = new AuthController();
+module.exports = new LoginController();

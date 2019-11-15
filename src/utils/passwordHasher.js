@@ -1,10 +1,6 @@
 const bcrypt = require("bcrypt");
 
 class PasswordHasher {
-	/* constructor(data) {
-		this.password = data;
-	} */
-
 	/**
 	 * Hash password
 	 * @param {string} password

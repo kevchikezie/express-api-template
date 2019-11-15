@@ -1,13 +1,17 @@
 const express = require("express");
-const AuthController = require("../../controllers/authController");
 const apiAuth = require("../../middlewares/apiAuth");
+const LoginController = require("../../controllers/auth/loginController");
+const RegisterController = require("../../controllers/auth/registerController");
+const VerifyEmailController = require("../../controllers/auth/verifyEmailController");
 
 const router = new express.Router();
 
-router.post("/login", AuthController.login);
+router.post("/login", LoginController.login);
 
-router.post("/register", AuthController.register);
+router.post("/register", RegisterController.register);
 
-router.post("/logout", apiAuth, AuthController.logout);
+router.post("/email/resend", apiAuth, VerifyEmailController.resend);
+
+router.post("/logout", apiAuth, LoginController.logout);
 
 module.exports = router;
