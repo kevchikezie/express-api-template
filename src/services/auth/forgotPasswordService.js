@@ -1,6 +1,7 @@
 const Mail = require("../../utils/mail");
 const models = require("../../database/models");
 const Token = require("../../utils/tokenManager");
+const Password = require("../../utils/passwordHasher");
 
 class ForgotPasswordService {
 	/**
@@ -24,7 +25,6 @@ class ForgotPasswordService {
 			<p>Regards, <br> ${process.env.APP_NAME}</p>`;
 
 			Mail.send(email, subject, body);
-			// console.log(resetPasswordUrl);
 		} else {
 			return false;
 		}
@@ -42,11 +42,12 @@ class ForgotPasswordService {
 	}
 
 	/**
-	 * Verify token and mark email as verified on database
+	 * Resets user's password inthe database
 	 * @param {string} token
+	 * @param {string} password
 	 * @returns {boolean}
 	 */
-	async markEmailAsVerified(token) {
+	async resetPassword(token, password) {
 		const decoded = await Token.decode(token);
 
 		const user = await models.User.findOne({ where: { email: decoded.email } });
@@ -55,16 +56,14 @@ class ForgotPasswordService {
 			throw new Error("Unable to verify user");
 		}
 
-		if (user.verifiedAt) {
-			return false;
-		}
+		const hashedPassword = await Password.hash(password);
 
-		const newUser = await user.update(
-			{ verifiedAt: new Date() },
+		const passwordUpdated = await user.update(
+			{ password: hashedPassword },
 			{ where: { id: user.id } }
 		);
 
-		if (!newUser) {
+		if (!passwordUpdated) {
 			throw new Error("Unable to verify user");
 		}
 
