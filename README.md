@@ -18,7 +18,7 @@ This Express API template already have the following features set up:
 - Launch Postman or Insomnia and run
 - Test if everything is up and running on Postman or Insomnia by sending a `GET` request to `localhost:{APP_PORT}/api/v1/status`. A `200 response code` is an indication that everything is up and running.
 
-# Environment variable worth explaining
+# Environment variables worth explaining
 
 ### MAIL:
 
