@@ -7,6 +7,14 @@ const morgan = require("morgan");
 const app = express();
 app.use(morgan("combined"));
 
+const multer = require("multer");
+const upload = multer({
+	dest: "uploads"
+});
+app.post("/upload", upload.single("upload"), (req, res) => {
+	res.send();
+});
+
 // Maintenance mode
 app.use((req, res, next) => {
 	if (config.app.maintenanceMode) {

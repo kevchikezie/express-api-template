@@ -22,6 +22,10 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.STRING
 			},
+			image: {
+				allowNull: true,
+				type: Sequelize.BLOB
+			},
 			verifiedAt: {
 				allowNull: true,
 				type: Sequelize.DATE
