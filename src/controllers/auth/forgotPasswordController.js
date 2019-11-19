@@ -15,7 +15,6 @@ class ForgotPasswordController {
 			res.send({
 				status: "success",
 				code: 200,
-				title: "OK",
 				message: "Reset link sent to your email. Check your inbox or spam."
 			});
 		} catch (error) {
@@ -32,19 +31,27 @@ class ForgotPasswordController {
 	async reset(req, res) {
 		try {
 			if (validator.isEmpty(req.body.password)) {
-				res.status(400).send({ error: "Password is required" });
+				res
+					.status(400)
+					.send({ error: { code: 400, message: "Password is required" } });
 			}
 
 			if (!validator.isLength(req.body.password, { min: 8 })) {
-				res
-					.status(400)
-					.send({ error: "Password must be at least 8 characters" });
+				res.status(400).send({
+					error: {
+						code: 400,
+						message: "Password must be at least 8 characters"
+					}
+				});
 			}
 
 			if (!validator.equals(req.body.password, req.body.confirm_password)) {
-				res
-					.status(400)
-					.send({ error: "Password must be same as confirm password" });
+				res.status(400).send({
+					error: {
+						code: 400,
+						message: "Password must be same as confirm password"
+					}
+				});
 			}
 
 			const hasReset = await ForgotPasswordService.resetPassword(
@@ -57,7 +64,11 @@ class ForgotPasswordController {
 			}
 		} catch (error) {
 			res.status(400).send({
-				error: "Token is invalid or has expired. Try sending reset link again."
+				error: {
+					code: 400,
+					message:
+						"Token is invalid or has expired. Try sending reset link again."
+				}
 			});
 		}
 	}

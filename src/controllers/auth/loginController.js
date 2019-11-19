@@ -16,7 +16,9 @@ class LoginController {
 
 			res.send(user);
 		} catch (error) {
-			res.status(400).send({ error: "Wrong login credentials" });
+			res
+				.status(400)
+				.send({ error: { code: 400, message: "Wrong login credentials" } });
 		}
 	}
 

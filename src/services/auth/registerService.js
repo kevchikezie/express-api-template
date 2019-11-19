@@ -18,7 +18,8 @@ class RegisterService {
 		const user = await models.User.create({
 			name: data.name,
 			email: data.email,
-			password: hashedPassword
+			password: hashedPassword,
+			verifiedAt: this.mustVerifyEmail === "true" ? null : new Date()
 		});
 
 		if (!user) {

@@ -63,12 +63,6 @@ class AccountController {
 	 */
 	async changePassword(req, res) {
 		try {
-			if (validator.isEmpty(req.body.password)) {
-				res
-					.status(400)
-					.send({ error: { code: 400, message: "Password is required." } });
-			}
-
 			if (!validator.isLength(req.body.password, { min: 8 })) {
 				res.status(422).send({
 					error: {
@@ -76,18 +70,18 @@ class AccountController {
 						message: "Password must be at least 8 characters."
 					}
 				});
-			}
-
-			if (!validator.equals(req.body.password, req.body.confirm_password)) {
+			} else if (
+				!validator.equals(req.body.password, req.body.confirm_password)
+			) {
 				res.status(422).send({
 					error: {
 						code: 422,
 						message: "Password must be same as confirm password."
 					}
 				});
-			}
-
-			if (!(await Password.match(req.body.old_password, req.user.password))) {
+			} else if (
+				!(await Password.match(req.body.old_password, req.user.password))
+			) {
 				res
 					.status(409)
 					.send({ error: { code: 409, message: "Old password is wrong." } });
