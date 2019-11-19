@@ -11,4 +11,8 @@ router.use("/auth", authRouter);
 
 router.use("/account", accountRouter);
 
+router.use("/status", (req, res) => {
+	res.send({ status: "success", code: 200, message: "OK" });
+});
+
 module.exports = router;

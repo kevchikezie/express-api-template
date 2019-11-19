@@ -8,6 +8,6 @@ router.use("/api/v1/", index);
 
 router.use("/", web);
 
-// router.use('/api/docs', 'you can use swagger here'); //DO NOT DELETE
+// router.use('/api/docs', 'you can use swagger here'); //TODO: Add swagger
 
 module.exports = router;

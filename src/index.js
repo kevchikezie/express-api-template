@@ -7,21 +7,16 @@ const morgan = require("morgan");
 const app = express();
 app.use(morgan("combined"));
 
-const multer = require("multer");
-const upload = multer({
-	dest: "uploads"
-});
-app.post("/upload", upload.single("upload"), (req, res) => {
-	res.send();
-});
-
 // Maintenance mode
 app.use((req, res, next) => {
-	if (config.app.maintenanceMode) {
+	if (config.app.maintenanceMode === "true") {
 		console.log("App is in maintenance mode");
-		res
-			.status(503)
-			.send({ error: "Maintenance is ongoing. We will be back soon!" });
+		res.status(503).send({
+			error: {
+				code: 503,
+				message: "Maintenance is ongoing. We will be back soon!"
+			}
+		});
 	} else {
 		next();
 	}
