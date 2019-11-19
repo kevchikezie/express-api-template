@@ -92,7 +92,7 @@ class AccountController {
 				await req.user.save();
 
 				// Destroy all token associated with this account
-				await req.user.userTokens[0].destroy();
+				await models.UserToken.destroy({ where: { userId: req.user.id } });
 			}
 
 			res.status(204).send();

@@ -58,6 +58,9 @@ class ForgotPasswordService {
 
 		const hashedPassword = await Password.hash(password);
 
+		// Destroy all tokens relating to user
+		await models.UserToken.destroy({ where: { userId: user.id } });
+
 		const passwordUpdated = await user.update(
 			{ password: hashedPassword },
 			{ where: { id: user.id } }
