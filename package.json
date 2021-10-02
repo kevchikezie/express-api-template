@@ -1,7 +1,7 @@
 {
-	"name": "farmerscreed-invest",
-	"version": "1.0.0",
-	"description": "FarmersCreed Invest API",
+	"name": "project-name",
+	"version": "1.0.1",
+	"description": "Project description",
 	"main": "index.js",
 	"scripts": {
 		"start": "node src/index.js",
