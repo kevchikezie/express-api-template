@@ -58,7 +58,6 @@ class VerifyEmailController {
 				res.send({
 					status: "success",
 					code: 200,
-					title: "OK",
 					message: "Email is verified.",
 					data: {
 						verifiedAt: req.user.verifiedAt
@@ -68,7 +67,6 @@ class VerifyEmailController {
 				res.send({
 					status: "success",
 					code: 200,
-					title: "OK",
 					message: "Email has not been verified.",
 					data: {
 						verifiedAt: req.user.verifiedAt

@@ -1,5 +1,3 @@
-const models = require("../database/models");
-
 class AccountService {
 	/**
 	 * Returns ONLY data that should be made available to the public
